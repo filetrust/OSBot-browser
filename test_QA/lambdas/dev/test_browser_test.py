@@ -1,10 +1,9 @@
 from gw_bot.Deploy import Deploy
 from osbot_aws.apis.Lambda import Lambda
 
-from gw_bot.helpers.Test_Helper import Test_Helper
+from osbot_aws.helpers.Test_Helper import Test_Helper
 from osbot_aws.apis.shell.Lambda_Shell import Lambda_Shell
 from osbot_browser.lambdas.dev.browser_test import run
-from osbot_utils.decorators.trace import trace
 
 
 class test_browser_test(Test_Helper):
@@ -56,7 +55,6 @@ class test_browser_test(Test_Helper):
     #         pip3 install -t _lambda_dependencies/websocket websocket
     #    GW-Bot/modules/OSBot-browser/_lambda_dependencies
     def test_upload_dependency(self):
-        import websockets
         from osbot_aws.Dependencies import upload_dependency
         from osbot_aws.Dependencies import pip_install_dependency
         pip_install_dependency('websocket-client')

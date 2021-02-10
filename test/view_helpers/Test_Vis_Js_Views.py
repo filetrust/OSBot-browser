@@ -1,10 +1,4 @@
-from unittest import TestCase
-
-from osbot_aws.apis.Lambda import Lambda
-
-from pbx_gs_python_utils.utils.Dev import Dev
-
-from gw_bot.helpers.Test_Helper import Test_Helper
+from osbot_aws.helpers.Test_Helper import Test_Helper
 from osbot_browser.browser.Browser_Lamdba_Helper import Browser_Lamdba_Helper
 from osbot_browser.view_helpers.Vis_Js_Views import Vis_Js_Views
 
@@ -23,15 +17,9 @@ class Test_Vis_Js_Views(Test_Helper):
 
 
     def test_default(self):
-        graph_name = 'graph_BMM'
-        self.result = Vis_Js_Views.default(params=[graph_name],headless=False)
-        return
+        graph_name = 'graph_X3X' # 'graph_JF4'
+        self.png_data = Vis_Js_Views.default(params=[graph_name],headless=False)
 
-        # browser_helper = Browser_Lamdba_Helper(headless=False).setup()
-        # pngData = browser_helper.get_screenshot_png()
-        # browser_helper.save_png_data(pngData)
-
-        #return
 
 
 
@@ -48,7 +36,6 @@ class Test_Vis_Js_Views(Test_Helper):
     def test_r1_r4(self):
         self.graph_name = 'graph_2Y4'
         self.png_data = Vis_Js_Views.r1_r4(params=[self.graph_name])
-        Dev.pprint(self.png_data)
         #self.png_data = None
 
     def test_by_status(self):

@@ -1,8 +1,5 @@
-from unittest import TestCase
-
 from gw_bot.Deploy import Deploy
-from gw_bot.helpers.Test_Helper import Test_Helper
-from osbot_browser.browser.Browser_Lamdba_Helper import Browser_Lamdba_Helper
+from osbot_aws.helpers.Test_Helper import Test_Helper
 from osbot_browser.view_helpers.VivaGraph_Js_Views import VivaGraph_Js_Views
 
 
@@ -24,7 +21,7 @@ class Test_VivaGraph_Js_Views(Test_Helper):
         self.result = Deploy().deploy_lambda__browser()
 
     def test_default(self):
-        graph_name = 'graph_J1Z'
+        graph_name = 'graph_X3X'
         #graph_name = 'graph_I3H' #'graph_UUZ'
         #graph_name = 'graph_24O'
         #graph_name = 'graph_041'  # large one  (doesn't work headless)

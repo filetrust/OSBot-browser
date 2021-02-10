@@ -1,7 +1,7 @@
 from osbot_browser.browser.API_Browser import API_Browser
 from osbot_browser.browser.Browser_Lamdba_Helper import Browser_Lamdba_Helper
 from osbot_browser.browser.Render_Page import Render_Page
-from pbx_gs_python_utils.utils.Files import Files
+from osbot_utils.utils.Files import Files
 
 
 class Google_Charts_Js:
@@ -9,7 +9,7 @@ class Google_Charts_Js:
     def __init__(self, headless=True):
         self.web_page     = '/google_charts/simple.html'
         self.web_root     = Files.path_combine(Files.parent_folder(__file__),'../web_root')
-        self.api_browser  = API_Browser(headless).sync__setup_browser()
+        self.api_browser  = API_Browser(headless=headless).sync__setup_browser()
         self.render_page  = Render_Page(api_browser=self.api_browser, web_root=self.web_root)
         self.table_width  = '100%'
         self.columns_defs = None

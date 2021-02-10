@@ -1,21 +1,16 @@
 import sys ;
-from time import sleep
-
 from gw_bot.Deploy import Deploy
-from gw_bot.helpers.Test_Helper import Test_Helper
+from osbot_aws.helpers.Test_Helper import Test_Helper
 from osbot_aws.apis.Lambda import Lambda
 from osbot_aws.apis.shell.Lambda_Shell import Lambda_Shell
 from osbot_aws.helpers.Lambda_Package import Lambda_Package
 from osbot_utils.decorators.Lists import group_by
 from osbot_utils.utils import Misc
-from osbot_utils.utils.Dev import Dev
-from osbot_utils.utils.Files import Files, file_exists, file_contents
-from osbot_utils.utils.Http import WS_is_open
+from osbot_utils.utils.Files import Files
 
 sys.path.append('../osbot_browser')
 
 import base64
-import unittest
 from syncer import sync
 from unittest import TestCase
 
@@ -27,46 +22,19 @@ class test_API_Browser(TestCase):
     def setUp(self):
          self.api = API_Browser(headless = False)
 
-    @sync
-    async def test_browser_connect(self):
-        browser = await self.api.browser_connect()
-        assert WS_is_open(browser.wsEndpoint)
-
-    def test_get_set_last_chrome_session(self):
-        self.api.file_tmp_last_chrome_session = Files.temp_file()
-        data = { 'url_chrome':'ws://127.0.0.1:64979/devtools/browser/75fbaab9-33eb-41ee-afd9-4aed65166791'}
-        self.api.set_last_chrome_session(data)
-        assert self.api.get_last_chrome_session() == data
-        Files.delete(self.api.file_tmp_last_chrome_session)
-
-    @unittest.skip("bug: needs to load markdow page first")
+    #@unittest.skip("bug: needs to load markdow page first")
     @sync
     async def test_js_eval(self):
-        markdown = """
-# some title "with double quotes"
-some text  and 'single quotes'
-"""
-        encoded_text = base64.b64encode(markdown.encode()).decode()
-        js_script = "convert(atob('{0}'))".format(encoded_text)
-
-        result = await self.api.js_eval(js_script)
-        #Dev.pprint(result)
-
-    @unittest.skip("bug: needs to load markdow page first")
-    @sync
-    async def test_invoke_js_function(self):
-        markdown = """
-# changed title "via js function"
-some text  and 'single quotes'
-"""
-        result = await self.api.js_invoke_function('convert',markdown)
-        #Dev.pprint(result)
+        text = "some_text"
+        text_base64 = base64.b64encode(text.encode()).decode()
+        assert await self.api.js_eval("btoa('{0}')".format(text))        == text_base64
+        assert await self.api.js_eval("atob('{0}')".format(text_base64)) == text
 
     @sync
     async def test_html(self):
         await self.api.open('https://www.google.com')
-        content = await self.api.html()
-        assert len(content.html()) > 100
+        html = await self.api.html()
+        assert len(html) > 100
 
     @sync
     async def test_open(self):
@@ -77,8 +45,10 @@ some text  and 'single quotes'
 
     @sync
     async def test_page(self):
+        url = 'https://www.google.com/404'
+        await self.api.open(url)
         page = await self.api.page()
-        assert "http" in page.url
+        assert page.url == url
 
 
     @sync

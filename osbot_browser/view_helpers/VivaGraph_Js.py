@@ -1,6 +1,6 @@
 from time import sleep
 
-from gw_bot.helpers.Lambda_Helpers import slack_message
+from osbot_aws.helpers.Lambda_Helpers import slack_message
 from osbot_aws.Globals     import Globals
 from osbot_aws.apis.Lambda import Lambda
 from osbot_aws.apis.S3     import S3
@@ -68,7 +68,7 @@ class VivaGraph_Js:
             s3_key    = data
             s3_bucket = Globals.lambda_s3_bucket
             tmp_file  = S3().file_download_and_delete(s3_bucket, s3_key)
-            data = Json.load_json_and_delete(tmp_file)
+            data = Json.load_file_and_delete(tmp_file)
             return data
         return data
 
